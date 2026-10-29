@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AYO Bio</title>
+  <style>
+    * { 
+      box-sizing: border-box; 
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans TC", sans-serif;
+      background: #f5f7fb;
+      color: #253047;
+      line-height: 1.8;
+      padding-top: 70px;
+    }
+
+    /* === 01 導覽列 === */
+    header.top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background-color: #121212;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      color: #ffffff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-sub {
+      font-size: 13px;
+      color: #a1a1aa;
+      font-weight: normal;
+    }
+
+    nav.nav-menu {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav.nav-menu a {
+      color: #e4e4e7;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      transition: color 0.3s ease, border-bottom 0.3s ease;
+      padding: 6px 0;
+      position: relative;
+    }
+
+    nav.nav-menu a:hover {
+      color: #ffffff;
+    }
+
+    nav.nav-menu a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #ffffff;
+      transition: width 0.3s ease;
+    }
+
+    nav.nav-menu a:hover::after {
+      width: 100%;
+    }
+
+    /* 主內容區域 (掌控全頁居中與寬度) */
+    main { 
+      max-width: 850px; 
+      margin: 32px auto; 
+      padding: 0 20px; 
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: #64748b;
+    }
+
+    /* === 02 自我介紹卡片 (左圖右文) === */
+    .intro-card {
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(23, 37, 84, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .intro__img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 3px solid #f1f5f9;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .intro__content {
+      flex: 1;
+    }
+
+    .intro__title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      color: #172554;
+      margin: 0 0 10px 0;
+      font-weight: 700;
+    }
+
+    .intro__title svg {
+      color: #04AA6D;
+      flex-shrink: 0;
+    }
+
+    .intro__text {
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    /* === 03 就學歷程卡片與時間軸 === */
+    .education-card {
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(23, 37, 84, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      color: #04AA6D;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin: 0 0 4px 0;
+    }
+
+    .section-title {
+      color: #172554;
+      font-size: 22px;
+      margin-top: 0;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    /* 時間軸容器 */
+    .timeline {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      position: relative;
+    }
+
+    /* 左側貫穿線 */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 105px;
+      width: 2px;
+      background-color: #e2e8f0;
+    }
+
+    .timeline__item {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+
+    .timeline__item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline__year {
+      width: 90px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #04AA6D;
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 4px 8px;
+      border-radius: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .timeline__body {
+      padding-left: 32px;
+      flex: 1;
+      position: relative;
+    }
+
+    /* 時間軸綠色小圓點 */
+    .timeline__body::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 8px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #04AA6D;
+      border: 3px solid #ffffff;
+      box-shadow: 0 0 0 1px #04AA6D;
+    }
+
+    .timeline__title {
+      margin: 0 0 6px 0;
+      font-size: 17px;
+      color: #172554;
+      font-weight: 700;
+    }
+
+    .timeline__desc {
+      margin: 0;
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    /* RWD 手機版微調 */
+    @media (max-width: 768px) {
+      header.top-bar {
+        padding: 0 16px;
+        flex-direction: column;
+        height: auto;
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+      body {
+        padding-top: 100px;
+      }
+      nav.nav-menu {
+        margin-top: 8px;
+        gap: 16px;
+      }
+      nav.nav-menu a {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .intro-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px 20px;
+        gap: 16px;
+      }
+
+      .intro__title {
+        justify-content: center;
+      }
+
+      .timeline::before {
+        left: 12px;
+      }
+
+      .timeline__item {
+        flex-direction: column;
+        padding-left: 28px;
+      }
+
+      .timeline__year {
+        margin-bottom: 8px;
+      }
+
+      .timeline__body {
+        padding-left: 0;
+      }
+
+      .timeline__body::before {
+        left: -20px;
+        top: -24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 置頂導覽列 -->
+  <header class="top-bar">
+    <a href="#" class="brand">
+      AYOIO <span class="brand-sub">｜ 2026</span>
+    </a>
+    <nav class="nav-menu">
+      <a href="#bio">bio</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+    </nav>
+  </header>
+
+  <!-- 主要卡片容器 -->
+  <main>
+    <!-- 卡片 1：關於我 -->
+    <section class="intro-card" id="bio" aria-labelledby="intro">
+      <img src="myimg/IMG_7548.PNG" alt="AYO" class="intro__img">
+      <div class="intro__content">
+        <h2 id="intro" class="intro__title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          關於我
+        </h2>
+        <p class="intro__text">
+          我是 AYO，目前就讀正修科技大學資訊管理系。熱愛網頁前端開發、系統整合與軟硬體折騰。平時除了專注於程式開發與 AI 應用之外，也積極累積各式個人作品集與實作經驗。
+        </p>
+      </div>
+    </section>
+
+    <!-- 卡片 2：就學歷程 (已納入 main 確保寬度與卡片感對齊) -->
+    <section class="education-card">
+      <p class="eyebrow">Education</p>
+      <h2 id="education" class="section-title">就學歷程</h2>
+      <ol class="timeline reveal is-visible">
+        
+        <!-- 大學歷程 -->
+        <li class="timeline__item">
+          <span class="timeline__year">2022 - 至今</span>
+          <div class="timeline__body">
+            <h3 class="timeline__title">正修科技大學</h3>
+            <p class="timeline__desc">資訊管理系 ｜ 主修網頁全端開發、資料庫管理與 AI 應用實作。</p>
+          </div>
+        </li>
+
+        <!-- 高中歷程 -->
+        <li class="timeline__item">
+          <span class="timeline__year">2019 - 2022</span>
+          <div class="timeline__body">
+            <h3 class="timeline__title">高中 / 高職名稱</h3>
+            <p class="timeline__desc">畢業 ｜ 奠定程式設計、邏輯思維與基礎資訊學科能力。</p>
+          </div>
+        </li>
+
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 AYO
+  </footer>
+
+</body>
+</html>
